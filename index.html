@@ -60,7 +60,7 @@
       getQuotes();
       const getQuote = () => getNewQuotes();
       const tweet = () => {
-        let tweetPost = `https://twitter.com/intent/tweet?text=The following quote is a result of  https://type.fit/api/quotes, an API, testing. "${quoteData.text}"  -  ${quoteData.author}`;
+        let tweetPost = `https://twitter.com/intent/tweet?text="${quoteData.text}"  -  ${quoteData.author}`;
         window.open(tweetPost);
       };
     </script>
