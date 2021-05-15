@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quotes</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="quoteShow">
+        <img
+          src="./images/twitter.png"
+          alt="Tweet"
+          id="tweetImg"
+          onclick="tweet()"
+        />
+        <div class="data">
+          <div id="quotes"></div>
+          <div id="author"></div>
+        </div>
+        <div class="btns">
+          <button id="getQuote" onclick="getQuote()">Get Quotes</button>
+          <button id="tweet" onclick="tweet()">Tweet</button>
+        </div>
+      </div>
+      <link rel="stylesheet" href="./style.css" />
+    </div>
+    <script>
+      const quotes = document.getElementById("quotes");
+      const author = document.getElementById("author");
+
+      let realData = "";
+      let quoteData = "";
+
+      const getNewQuotes = () => {
+        let rNum = Math.floor(Math.random() * 1642);
+        // console.log(realData[rNum].text);
+        quoteData = realData[rNum];
+        quotes.innerText = `"${quoteData.text}"`;
+
+        quoteData.author === null
+          ? (author.innerText = "- Unknown")
+          : (author.innerText = `- ${quoteData.author}`);
+      };
+
+      const getQuotes = async () => {
+        const url = "https://type.fit/api/quotes";
+        try {
+          const data = await fetch(url);
+          realData = await data.json();
+          //   console.log(realData.length);
+          getNewQuotes(); // A quote shall be shown already //
+          //   console.log(realData);
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      getQuotes();
+      const getQuote = () => getNewQuotes();
+      const tweet = () => {
+        let tweetPost = `https://twitter.com/intent/tweet?text=The following quote is a result of  https://type.fit/api/quotes, an API, testing. "${quoteData.text}"  -  ${quoteData.author}`;
+        window.open(tweetPost);
+      };
+    </script>
+  </body>
+</html>
